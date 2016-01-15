@@ -25,10 +25,9 @@ class  Attachment extends CI_Controller
             $this->load->library('upload', $config);
 
             if ($this->upload->do_upload($fieldname)) {
-                echo '<pre>';
-                var_dump($this->upload->data());
-                echo '</pre>';exit;
-
+                $attachment = $this->upload->data();
+//                $this->resize($attachment);
+                $this->watermark($attachment);
             } else {
                 echo '<pre>';
                 var_dump($this->upload->display_errors());
@@ -37,5 +36,38 @@ class  Attachment extends CI_Controller
         }
 
         $this->load->view('attachment/index');
+    }
+
+    public function resize($attachment)
+    {
+        $imageTypes = array('.bmp', '.gif', '.jpeg', '.jpg', '.jpe', '.png');
+
+        $config['image_library']  = 'gd2';
+        $config['source_image']   = $attachment['full_path'];
+        $config['create_thumb']   = true;
+        $config['thumb_marker']   = '_thumb';
+        $config['maintain_ratio'] = true;
+        $config['width'] = 75;
+        $config['height'] = 50;
+
+        $this->load->library('image_lib', $config); // загружаем библиотеку
+        $this->image_lib->resize();
+    }
+
+    public function watermark($attachment)
+    {
+        $config['source_image']	= $attachment['full_path'];
+        $config['wm_text'] = 'Copyright 2009 - Tutulkin';
+        $config['wm_type'] = 'text';
+        $config['wm_font_path'] = './system/fonts/texb.ttf';
+        $config['wm_font_size']	= '14';
+        $config['wm_font_color'] = 'e5e5e5';
+        $config['wm_vrt_alignment'] = 'bottom';
+        $config['wm_hor_alignment'] = 'center';
+//        $config['wm_padding'] = '20';
+
+        $this->load->library('image_lib', $config);
+
+        $this->image_lib->watermark();
     }
 }

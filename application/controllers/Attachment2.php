@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: Denis
- * Date: 15.01.2016
- * Time: 23:57
- */
 class  Attachment extends CI_Controller
 {
     public function upload()

@@ -78,3 +78,14 @@ footer a {
 footer a:hover {
 	color: #a0a0a0;
 }
+/***** Modal form ******/
+.modal-form .title {
+    width: 510px;
+}
+.modal-form textarea {
+    width: 510px;
+    height: 150px;
+}
+.modal-form .public-date {
+    width: 137px;
+}

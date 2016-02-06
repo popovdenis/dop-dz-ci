@@ -7,15 +7,29 @@
  */
 class Rules_model extends CI_Model
 {
-    public $add_rules = array(
+    private $rules = array(
         array(
             'field' => 'title',
             'label' => 'Название статьи',
-            'rules' => 'required|min_length[5]|max_length[50]|trim|callback_title_check'
+            'rules' => 'required|min_length[5]|max_length[50]|trim'
         ),
-    );
+        array(
+            'field' => 'content',
+            'label' => 'Содержимое статьи',
+            'rules' => 'required|max_length[200]|trim'
+        ),
+        array(
+            'field' => 'public_date',
+            'label' => 'Дата публикации',
+            'rules' => 'required|max_length[10]|trim'
+        ),
+    );//callback_title_check
 
-    public $rules_messages = array(
-        'title' => 'Название статьи некорректное'
-    );
+    /**
+     * @return array
+     */
+    public function getRules()
+    {
+        return $this->rules;
+    }
 }
